@@ -2,6 +2,11 @@
   "current": "Default",
   "presets": {
     "Default": {
+      "ga4_id": "G-15028924613",
+      "gtm_id": "",
+      "meta_pixel_id": "",
+      "hotjar_id": "",
+      "klaviyo_public_key": "",
       "logo_width": 90,
       "color_schemes": {
         "scheme-1": {
