@@ -1,0 +1,135 @@
+{% comment %}
+  ============================================================
+  TRACKING SCRIPTS SNIPPET
+  Centralizes all marketing/analytics tracking in one place.
+  Render this in theme.liquid just before </head>.
+
+  Skills demonstrated (JD):
+  - Google Tag Manager (GTM)
+  - Google Analytics 4 (GA4) via gtag
+  - Meta Pixel (Facebook)
+  - Hotjar
+  - Klaviyo
+
+  To enable each tool, set the corresponding setting in
+  settings_schema.json, or replace the placeholder IDs below
+  with your real IDs.
+  ============================================================
+{% endcomment %}
+
+{%- liquid
+  assign gtm_id       = settings.gtm_id
+  assign ga4_id       = settings.ga4_id
+  assign meta_pixel   = settings.meta_pixel_id
+  assign hotjar_id    = settings.hotjar_id
+  assign klaviyo_id   = settings.klaviyo_public_key
+-%}
+
+{% comment %} ── Google Tag Manager (HEAD snippet) ── {% endcomment %}
+{%- if gtm_id != blank -%}
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','{{ gtm_id }}');</script>
+  <!-- End Google Tag Manager -->
+{%- endif -%}
+
+{% comment %} ── Google Analytics 4 (gtag.js) ── {% endcomment %}
+{%- if ga4_id != blank -%}
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{{ ga4_id }}', {
+      page_title: {{ page_title | json }},
+      page_location: window.location.href
+    });
+
+    {%- if request.page_type == 'product' -%}
+      gtag('event', 'view_item', {
+        currency: {{ cart.currency.iso_code | json }},
+        value: {{ product.price | money_without_currency | strip_html }},
+        items: [{
+          item_id: {{ product.id | json }},
+          item_name: {{ product.title | json }},
+          item_category: {{ product.type | json }},
+          price: {{ product.price | money_without_currency | strip_html }}
+        }]
+      });
+    {%- endif -%}
+
+    {%- if request.page_type == 'collection' -%}
+      gtag('event', 'view_item_list', {
+        item_list_name: {{ collection.title | json }}
+      });
+    {%- endif -%}
+  </script>
+  <!-- End Google Analytics 4 -->
+{%- endif -%}
+
+{% comment %} ── Meta Pixel (Facebook) ── {% endcomment %}
+{%- if meta_pixel != blank -%}
+  <!-- Meta Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '{{ meta_pixel }}');
+    fbq('track', 'PageView');
+
+    {%- if request.page_type == 'product' -%}
+      fbq('track', 'ViewContent', {
+        content_ids: ['{{ product.id }}'],
+        content_name: {{ product.title | json }},
+        content_type: 'product',
+        value: {{ product.price | money_without_currency | strip_html }},
+        currency: '{{ cart.currency.iso_code }}'
+      });
+    {%- endif -%}
+
+    {%- if request.page_type == 'cart' -%}
+      fbq('track', 'InitiateCheckout', {
+        value: {{ cart.total_price | money_without_currency | strip_html }},
+        currency: '{{ cart.currency.iso_code }}',
+        num_items: {{ cart.item_count }}
+      });
+    {%- endif -%}
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+      src="https://www.facebook.com/tr?id={{ meta_pixel }}&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- End Meta Pixel -->
+{%- endif -%}
+
+{% comment %} ── Hotjar ── {% endcomment %}
+{%- if hotjar_id != blank -%}
+  <!-- Hotjar -->
+  <script>
+    (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:{{ hotjar_id }},hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+  </script>
+  <!-- End Hotjar -->
+{%- endif -%}
+
+{% comment %} ── Klaviyo ── {% endcomment %}
+{%- if klaviyo_id != blank -%}
+  <!-- Klaviyo -->
+  <script async type="text/javascript" src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id={{ klaviyo_id }}"></script>
+  <!-- End Klaviyo -->
+{%- endif -%}

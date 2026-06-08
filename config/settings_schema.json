@@ -1,6 +1,70 @@
 [
   {
     "name": "theme_info",
+    "theme_name": "avtheme"
+  },
+  {
+    "name": "Marketing & Tracking",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Google Tag Manager"
+      },
+      {
+        "type": "text",
+        "id": "gtm_id",
+        "label": "GTM Container ID",
+        "placeholder": "GTM-XXXXXXX",
+        "info": "Enter your Google Tag Manager container ID (e.g. GTM-XXXXXXX)"
+      },
+      {
+        "type": "header",
+        "content": "Google Analytics 4"
+      },
+      {
+        "type": "text",
+        "id": "ga4_id",
+        "label": "GA4 Measurement ID",
+        "placeholder": "G-XXXXXXXXXX",
+        "info": "Enter your GA4 Measurement ID (e.g. G-XXXXXXXXXX). Skip if using GTM."
+      },
+      {
+        "type": "header",
+        "content": "Meta Pixel"
+      },
+      {
+        "type": "text",
+        "id": "meta_pixel_id",
+        "label": "Meta Pixel ID",
+        "placeholder": "123456789012345",
+        "info": "Enter your Facebook/Meta Pixel ID"
+      },
+      {
+        "type": "header",
+        "content": "Hotjar"
+      },
+      {
+        "type": "text",
+        "id": "hotjar_id",
+        "label": "Hotjar Site ID",
+        "placeholder": "1234567",
+        "info": "Enter your Hotjar Site ID (numbers only)"
+      },
+      {
+        "type": "header",
+        "content": "Klaviyo"
+      },
+      {
+        "type": "text",
+        "id": "klaviyo_public_key",
+        "label": "Klaviyo Public API Key",
+        "placeholder": "XXXXXX",
+        "info": "Enter your Klaviyo 6-character public API key"
+      }
+    ]
+  },
+  {
+    "name": "theme_info",
     "theme_name": "Dawn",
     "theme_version": "15.4.1",
     "theme_author": "Shopify",

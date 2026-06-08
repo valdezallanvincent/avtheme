@@ -296,9 +296,24 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
+
+    {% comment %} ── SEO: Structured data (JSON-LD) ── {% endcomment %}
+    {%- render 'seo-structured-data' -%}
+
+    {% comment %} ── Marketing tracking scripts (GTM, GA4, Meta Pixel, Hotjar, Klaviyo) ── {% endcomment %}
+    {%- render 'tracking-scripts' -%}
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
+
+    {% comment %} ── Google Tag Manager (body noscript) ── {% endcomment %}
+    {%- if settings.gtm_id != blank -%}
+      <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id={{ settings.gtm_id }}"
+          height="0" width="0" style="display:none;visibility:hidden"></iframe>
+      </noscript>
+    {%- endif -%}
+
     <a class="skip-to-content-link button visually-hidden" href="#MainContent">
       {{ 'accessibility.skip_to_text' | t }}
     </a>
