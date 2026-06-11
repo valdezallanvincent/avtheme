@@ -1,0 +1,151 @@
+{%- comment -%}
+  AV COLLECTION HERO
+  Lifestyle-styled collection banner with optional background image,
+  breadcrumb nav, collection title, description and subcollection tiles.
+{%- endcomment -%}
+
+{%- assign has_image = false -%}
+{%- if collection.image -%}
+  {%- assign has_image = true -%}
+{%- elsif section.settings.fallback_image_url != blank -%}
+  {%- assign has_image = true -%}
+{%- endif -%}
+
+{%- style -%}
+  #av-ch-{{ section.id }} {
+    position: relative;
+    overflow: hidden;
+    min-height: {{ section.settings.hero_height }}px;
+    display: flex;
+    align-items: flex-end;
+    background: rgb(var(--color-background));
+  }
+  #av-ch-{{ section.id }} .av-ch__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  #av-ch-{{ section.id }} .av-ch__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  #av-ch-{{ section.id }} .av-ch__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(13,13,13,0.80) 0%,
+      rgba(13,13,13,0.35) 50%,
+      rgba(13,13,13,0.10) 100%
+    );
+    z-index: 1;
+  }
+  #av-ch-{{ section.id }} .av-ch__content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 5.6rem 2rem;
+    color: {%- if has_image -%}#fff{%- else -%}rgb(var(--color-foreground)){%- endif -%};
+  }
+  #av-ch-{{ section.id }} .av-ch__breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.15rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.8rem;
+    opacity: 0.65;
+  }
+  #av-ch-{{ section.id }} .av-ch__breadcrumb a {
+    color: inherit;
+    text-decoration: none;
+  }
+  #av-ch-{{ section.id }} .av-ch__breadcrumb a:hover { opacity: 1; text-decoration: underline; }
+  #av-ch-{{ section.id }} .av-ch__breadcrumb span { opacity: 0.5; }
+  #av-ch-{{ section.id }} .av-ch__title {
+    font-family: var(--av-font-heading, Georgia, serif) !important;
+    font-size: clamp(3.6rem, 6vw, 7.2rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.6rem;
+  }
+  #av-ch-{{ section.id }} .av-ch__desc {
+    font-size: 1.6rem;
+    line-height: 1.6;
+    max-width: 56rem;
+    opacity: 0.75;
+    margin: 0;
+    font-weight: 300;
+  }
+  #av-ch-{{ section.id }} .av-ch__meta {
+    font-size: 1.2rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.5;
+    margin-top: 2rem;
+  }
+
+  /* No-image style */
+  #av-ch-{{ section.id }}.av-ch--no-image {
+    min-height: 0;
+    padding: 6.4rem 0 4rem;
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+  }
+  #av-ch-{{ section.id }}.av-ch--no-image .av-ch__content {
+    padding: 0 2rem;
+  }
+
+  @media (max-width: 749px) {
+    #av-ch-{{ section.id }} { min-height: {{ section.settings.hero_height | times: 0.65 | round }}px; }
+    #av-ch-{{ section.id }} .av-ch__title { font-size: clamp(3rem, 8vw, 4.8rem); }
+  }
+{%- endstyle -%}
+
+<div id="av-ch-{{ section.id }}" class="av-collection-hero{% unless has_image %} av-ch--no-image{% endunless %}">
+  {%- if has_image -%}
+    <div class="av-ch__bg">
+      {%- if collection.image -%}
+        {{ collection.image | image_url: width: 2000 | image_tag: loading: 'eager', fetchpriority: 'high', alt: collection.title | escape }}
+      {%- else -%}
+        <img src="{{ section.settings.fallback_image_url }}?auto=format&fit=crop&w=2000&q=80" alt="{{ collection.title | escape }}" loading="eager" fetchpriority="high">
+      {%- endif -%}
+    </div>
+    <div class="av-ch__overlay"></div>
+  {%- endif -%}
+
+  <div class="av-ch__content">
+    <nav class="av-ch__breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span>›</span>
+      <a href="{{ routes.collections_url }}">Collections</a>
+      <span>›</span>
+      <span aria-current="page">{{ collection.title | escape }}</span>
+    </nav>
+    <h1 class="av-ch__title">{{ collection.title | escape }}</h1>
+    {%- if collection.description != blank and section.settings.show_description -%}
+      <p class="av-ch__desc">{{ collection.description }}</p>
+    {%- endif -%}
+    <p class="av-ch__meta">{{ collection.products_count }} {% if collection.products_count == 1 %}product{% else %}products{% endif %}</p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "AV Collection Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "range", "id": "hero_height", "label": "Hero height (no image: ignored)", "min": 280, "max": 700, "step": 20, "unit": "px", "default": 420 },
+    { "type": "text", "id": "fallback_image_url", "label": "Fallback image URL (if no collection image)", "default": "https://images.unsplash.com/photo-1483985988355-763728e1935b" },
+    { "type": "checkbox", "id": "show_description", "label": "Show collection description", "default": true }
+  ],
+  "presets": [{ "name": "AV Collection Hero" }]
+}
+{% endschema %}
