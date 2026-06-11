@@ -255,6 +255,50 @@
       }
     {% endstyle %}
 
+    {%- comment -%} AV: Premium lifestyle typography — Cormorant Garamond (headings) + DM Sans (body) {%- endcomment -%}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+      /* ── AV Global Design Tokens ── */
+      :root {
+        --av-font-heading: 'Cormorant Garamond', Georgia, serif;
+        --av-font-body: 'DM Sans', -apple-system, sans-serif;
+        --av-black: #0d0d0d;
+        --av-off-white: #f9f7f4;
+        --av-cream: #f2ede6;
+        --av-accent: #c9a96e;
+        --av-accent-dark: #a07840;
+        --av-text-muted: rgba(13,13,13,0.52);
+        --av-radius-card: 4px;
+        --av-radius-pill: 100px;
+        --av-transition: 0.35s cubic-bezier(0.22,1,0.36,1);
+      }
+
+      /* Override Dawn's font stack globally */
+      body, button, input, select, textarea {
+        font-family: var(--av-font-body) !important;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      h1, h2, h3, h4, h5, h6,
+      .av-hero__heading,
+      .av-bs__heading,
+      .av-pg__heading,
+      .av-tm__heading,
+      .av-nl__heading,
+      .av-ab__heading,
+      .av-ct__heading {
+        font-family: var(--av-font-heading) !important;
+        letter-spacing: -0.01em;
+      }
+
+      /* Subtle page background warmth */
+      body { background-color: var(--av-off-white) !important; }
+    </style>
+
     {{ 'base.css' | asset_url | stylesheet_tag }}
     <link rel="stylesheet" href="{{ 'component-cart-items.css' | asset_url }}" media="print" onload="this.media='all'">
 

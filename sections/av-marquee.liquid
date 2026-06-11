@@ -1,0 +1,196 @@
+{%- comment -%}
+  AV MARQUEE TICKER
+  Horizontally scrolling text strip — great for promos, brand values, or seasonal messages.
+  Duplicates items so the loop is seamless.
+{%- endcomment -%}
+
+{%- assign text_color = section.settings.text_color -%}
+{%- assign bg_color = section.settings.bg_color -%}
+
+{%- style -%}
+  #av-mq-{{ section.id }} {
+    background: {{ bg_color }};
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    overflow: hidden;
+    position: relative;
+    border-top: 1px solid rgba(0,0,0,0.07);
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+  }
+  #av-mq-{{ section.id }} .av-mq__track {
+    display: flex;
+    white-space: nowrap;
+    animation: av-marquee {{ section.settings.speed }}s linear infinite;
+    width: max-content;
+  }
+  #av-mq-{{ section.id }} .av-mq__track:hover { animation-play-state: paused; }
+  #av-mq-{{ section.id }} .av-mq__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.6rem;
+    padding: 0 3.2rem;
+    font-size: {{ section.settings.font_size }}rem;
+    font-weight: {{ section.settings.font_weight }};
+    color: {{ text_color }};
+    text-transform: {{ section.settings.text_transform }};
+    letter-spacing: {{ section.settings.letter_spacing }}em;
+    font-family: {%- if section.settings.use_serif -%} var(--av-font-heading){%- else -%} var(--av-font-body){%- endif -%};
+    font-style: {%- if section.settings.italic -%}italic{%- else -%}normal{%- endif -%};
+  }
+  #av-mq-{{ section.id }} .av-mq__sep {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: {{ text_color }};
+    opacity: 0.4;
+    flex-shrink: 0;
+  }
+  @keyframes av-marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #av-mq-{{ section.id }} .av-mq__track { animation: none; }
+  }
+{%- endstyle -%}
+
+{%- assign items_str = '' -%}
+{%- for block in section.blocks -%}
+  {%- if block.settings.text != blank -%}
+    {%- assign items_str = items_str | append: block.settings.text | append: '|||' -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- assign items = items_str | split: '|||' -%}
+
+<div id="av-mq-{{ section.id }}" class="av-marquee-section" aria-hidden="true">
+  <div class="av-mq__track">
+    {%- comment -%} Render twice for seamless loop {%- endcomment -%}
+    {%- for pass in (1..2) -%}
+      {%- for item in items -%}
+        {%- if item != blank -%}
+          <span class="av-mq__item">{{ item | escape }}</span>
+          <span class="av-mq__sep"></span>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "AV Marquee Ticker",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 12,
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Ticker item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "New arrivals every week"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#0d0d0d"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#f9f7f4"
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll speed (seconds per loop)",
+      "min": 10, "max": 80, "step": 5,
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size (rem)",
+      "min": 1, "max": 3, "step": 1,
+      "default": 1
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "Font weight",
+      "options": [
+        { "value": "400", "label": "Regular" },
+        { "value": "500", "label": "Medium" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "select",
+      "id": "text_transform",
+      "label": "Text case",
+      "options": [
+        { "value": "none", "label": "Normal" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ],
+      "default": "uppercase"
+    },
+    {
+      "type": "range",
+      "id": "letter_spacing",
+      "label": "Letter spacing (em)",
+      "min": 0, "max": 30, "step": 2,
+      "default": 14
+    },
+    {
+      "type": "checkbox",
+      "id": "use_serif",
+      "label": "Use serif font",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "italic",
+      "label": "Italic",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 8, "max": 40, "step": 2, "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 8, "max": 40, "step": 2, "unit": "px",
+      "default": 14
+    }
+  ],
+  "presets": [
+    {
+      "name": "AV Marquee Ticker",
+      "blocks": [
+        { "type": "item", "settings": { "text": "New Season Arrivals" } },
+        { "type": "item", "settings": { "text": "Free Shipping on ₱1,500+" } },
+        { "type": "item", "settings": { "text": "Timeless Essentials" } },
+        { "type": "item", "settings": { "text": "Thoughtfully Curated" } },
+        { "type": "item", "settings": { "text": "Easy 30-Day Returns" } },
+        { "type": "item", "settings": { "text": "Premium Quality" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
