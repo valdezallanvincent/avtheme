@@ -1,0 +1,184 @@
+{%- comment -%}
+  AV SOCIAL PROOF — animated stat counters
+  Numbers count up on scroll-reveal for a lively feel.
+{%- endcomment -%}
+
+{%- style -%}
+  #av-sp-{{ section.id }} {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background: rgb(var(--color-foreground));
+    color: rgb(var(--color-background));
+    position: relative;
+    overflow: hidden;
+  }
+  #av-sp-{{ section.id }}::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.04) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(255,255,255,0.03) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  #av-sp-{{ section.id }} .av-sp__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: repeat({{ section.blocks.size }}, 1fr);
+    gap: 2rem;
+    text-align: center;
+  }
+  #av-sp-{{ section.id }} .av-sp__item {
+    padding: 2.4rem 1.6rem;
+  }
+  #av-sp-{{ section.id }} .av-sp__number {
+    display: block;
+    font-size: clamp(3.2rem, 5vw, 5.4rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: rgb(var(--color-background));
+    margin-bottom: 0.8rem;
+  }
+  #av-sp-{{ section.id }} .av-sp__suffix {
+    font-size: clamp(2.4rem, 3.5vw, 3.6rem);
+  }
+  #av-sp-{{ section.id }} .av-sp__label {
+    font-size: 1.4rem;
+    font-weight: 500;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0;
+    color: rgb(var(--color-background));
+  }
+  @media (max-width: 749px) {
+    #av-sp-{{ section.id }} .av-sp__inner {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+{%- endstyle -%}
+
+<section id="av-sp-{{ section.id }}" class="av-social-proof-section">
+  <div class="av-sp__inner">
+    {%- for block in section.blocks -%}
+      <div class="av-sp__item av-reveal" style="--av-delay: {{ forloop.index0 | times: 100 }}ms" {{ block.shopify_attributes }}>
+        <span
+          class="av-sp__number"
+          data-count-to="{{ block.settings.number }}"
+          data-count-decimals="{{ block.settings.decimals }}"
+        >
+          <span class="av-sp__count">{{ block.settings.number }}</span><span class="av-sp__suffix">{{ block.settings.suffix | escape }}</span>
+        </span>
+        <p class="av-sp__label">{{ block.settings.label | escape }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+<script>
+(function () {
+  'use strict';
+  function animateCounter(el) {
+    const wrap = el.closest('.av-sp__item');
+    const countEl = el.querySelector('.av-sp__count');
+    if (!countEl) return;
+    const target = parseFloat(el.dataset.countTo) || 0;
+    const decimals = parseInt(el.dataset.countDecimals, 10) || 0;
+    const duration = 1600;
+    const start = performance.now();
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      const current = target * eased;
+      countEl.textContent = decimals > 0 ? current.toFixed(decimals) : Math.round(current).toLocaleString();
+      if (progress < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (e.isIntersecting) {
+        animateCounter(e.target);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+
+  document.querySelectorAll('[data-count-to]').forEach((el) => observer.observe(el));
+
+  document.addEventListener('shopify:section:load', () => {
+    document.querySelectorAll('[data-count-to]').forEach((el) => observer.observe(el));
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "AV Social Proof",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        {
+          "type": "text",
+          "id": "number",
+          "label": "Number (digits only)",
+          "default": "5000"
+        },
+        {
+          "type": "text",
+          "id": "suffix",
+          "label": "Suffix (e.g. +, k, %)",
+          "default": "+"
+        },
+        {
+          "type": "number",
+          "id": "decimals",
+          "label": "Decimal places",
+          "default": 0
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Happy Customers"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0, "max": 120, "step": 4, "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0, "max": 120, "step": 4, "unit": "px",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "AV Social Proof",
+      "blocks": [
+        { "type": "stat", "settings": { "number": "8500", "suffix": "+", "label": "Happy Customers" } },
+        { "type": "stat", "settings": { "number": "4.9", "suffix": "★", "decimals": 1, "label": "Average Rating" } },
+        { "type": "stat", "settings": { "number": "120", "suffix": "+", "label": "Products" } },
+        { "type": "stat", "settings": { "number": "98", "suffix": "%", "label": "Satisfaction Rate" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

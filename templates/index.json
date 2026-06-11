@@ -4,15 +4,57 @@
       "type": "av-hero",
       "settings": {
         "external_image_url": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=2000&q=80",
-        "eyebrow": "New Season",
-        "heading": "Discover Your Style",
+        "eyebrow": "New Season Arrivals",
+        "heading": "Dress the Life You Want",
         "subheading": "Timeless essentials, thoughtfully made and curated just for you.",
         "button_label": "Shop Now",
         "button_link": "shopify://collections/all",
-        "section_height": 660,
-        "overlay_opacity": 45,
+        "section_height": 700,
+        "overlay_opacity": 40,
         "content_alignment": "center"
       }
+    },
+    "av_features_bar": {
+      "type": "av-features-bar",
+      "settings": {
+        "padding_top": 32,
+        "padding_bottom": 32
+      },
+      "blocks": {
+        "feat_1": {
+          "type": "feature",
+          "settings": {
+            "icon": "1",
+            "label": "Free Shipping",
+            "description": "On orders over ₱1,500"
+          }
+        },
+        "feat_2": {
+          "type": "feature",
+          "settings": {
+            "icon": "3",
+            "label": "Secure Checkout",
+            "description": "100% encrypted payments"
+          }
+        },
+        "feat_3": {
+          "type": "feature",
+          "settings": {
+            "icon": "2",
+            "label": "Easy Returns",
+            "description": "30-day hassle-free returns"
+          }
+        },
+        "feat_4": {
+          "type": "feature",
+          "settings": {
+            "icon": "4",
+            "label": "Premium Quality",
+            "description": "Curated for lasting wear"
+          }
+        }
+      },
+      "blocks_order": ["feat_1", "feat_2", "feat_3", "feat_4"]
     },
     "av_product_grid": {
       "type": "av-product-grid",
@@ -24,21 +66,104 @@
         "products_to_show": 8,
         "show_vendor": false,
         "show_view_all": true,
-        "padding_top": 72,
+        "padding_top": 80,
         "padding_bottom": 72
       }
+    },
+    "av_social_proof": {
+      "type": "av-social-proof",
+      "settings": {
+        "padding_top": 64,
+        "padding_bottom": 64
+      },
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": { "number": "8500", "suffix": "+", "decimals": 0, "label": "Happy Customers" }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": { "number": "4.9", "suffix": "★", "decimals": 1, "label": "Average Rating" }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": { "number": "120", "suffix": "+", "decimals": 0, "label": "Products" }
+        },
+        "stat_4": {
+          "type": "stat",
+          "settings": { "number": "98", "suffix": "%", "decimals": 0, "label": "Satisfaction Rate" }
+        }
+      },
+      "blocks_order": ["stat_1", "stat_2", "stat_3", "stat_4"]
     },
     "av_brand_story": {
       "type": "av-brand-story",
       "settings": {
         "layout": "image_left",
-        "external_image_url": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2",
+        "external_image_url": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=1000&q=80",
         "image_ratio": "4 / 3",
-        "image_radius": 12,
+        "image_radius": 16,
         "label": "Our Story",
         "heading": "Crafted with care, built to last.",
-        "body": "<p>We believe great products come from great intentions. Every item in our store is thoughtfully sourced, rigorously tested, and made to bring real value to your everyday life.</p>",
+        "body": "<p>We believe great products come from great intentions. Every item in our store is thoughtfully sourced, rigorously tested, and made to bring real value to your everyday life. Quality you can feel, at prices that make sense.</p>",
         "button_label": "Learn More",
+        "button_link": "shopify://pages/about",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    },
+    "av_testimonials": {
+      "type": "custom-testimonials",
+      "settings": {
+        "eyebrow": "What customers say",
+        "heading": "Loved by thousands",
+        "padding_top": 80,
+        "padding_bottom": 80
+      },
+      "blocks": {
+        "rev_1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "I've been shopping here for months and the quality never disappoints. The fabrics are soft, the fit is perfect, and delivery was super fast!",
+            "name": "Maria Santos",
+            "meta": "Verified Buyer · Metro Manila",
+            "verified": true
+          }
+        },
+        "rev_2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "Finally found a brand that gets it right. The packaging was beautiful and the product exceeded my expectations. 10/10 would recommend!",
+            "name": "Jake Reyes",
+            "meta": "Verified Buyer · Cebu City",
+            "verified": true
+          }
+        },
+        "rev_3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "quote": "Great pieces, great price. I ordered two sizes and the return process was so easy. Definitely a repeat customer.",
+            "name": "Ana Cruz",
+            "meta": "Verified Buyer · Davao",
+            "verified": true
+          }
+        }
+      },
+      "blocks_order": ["rev_1", "rev_2", "rev_3"]
+    },
+    "av_newsletter": {
+      "type": "av-newsletter",
+      "settings": {
+        "eyebrow": "Stay in the loop",
+        "heading": "Get early access to new drops",
+        "subheading": "Subscribe to our newsletter and be the first to know about exclusive offers, new arrivals, and style tips.",
+        "placeholder": "Enter your email",
+        "button_label": "Subscribe",
+        "fine_print": "No spam. Unsubscribe anytime.",
+        "bg_image_url": "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=2000&q=80",
         "padding_top": 96,
         "padding_bottom": 96
       }
@@ -62,8 +187,12 @@
   },
   "order": [
     "av_hero",
+    "av_features_bar",
     "av_product_grid",
+    "av_social_proof",
     "av_brand_story",
+    "av_testimonials",
+    "av_newsletter",
     "av_ab_test"
   ]
 }
