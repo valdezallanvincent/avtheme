@@ -1,67 +1,7 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
-    "custom_testimonials_RXXAyJ": {
-      "type": "custom-testimonials",
-      "blocks": {
-        "testimonial_qLwfAD": {
-          "type": "testimonial",
-          "settings": {
-            "rating": 5,
-            "show_stars": true,
-            "quote": "Absolutely love the quality! Will definitely order again.",
-            "author_name": "Maria Santos",
-            "author_title": "Verified buyer"
-          }
-        },
-        "testimonial_tcta7t": {
-          "type": "testimonial",
-          "settings": {
-            "rating": 5,
-            "show_stars": true,
-            "quote": "Fast shipping and the product exceeded my expectations. Highly recommend!",
-            "author_name": "John Reyes",
-            "author_title": "Verified buyer"
-          }
-        },
-        "testimonial_Q7mKiq": {
-          "type": "testimonial",
-          "settings": {
-            "rating": 4,
-            "show_stars": true,
-            "quote": "Great customer service and amazing product. 10/10.",
-            "author_name": "Anna Cruz",
-            "author_title": "Verified buyer"
-          }
-        }
-      },
-      "block_order": [
-        "testimonial_qLwfAD",
-        "testimonial_tcta7t",
-        "testimonial_Q7mKiq"
-      ],
-      "name": "Testimonials",
-      "settings": {
-        "heading": "What our customers say",
-        "subheading": "Real reviews from real customers",
-        "color_scheme": "",
-        "columns_desktop": 3,
-        "columns_mobile": 2,
-        "card_radius": 8,
-        "padding_top": 60,
-        "padding_bottom": 60
-      }
-    },
     "footer": {
       "type": "footer",
       "blocks": {
@@ -94,9 +34,9 @@
       ],
       "settings": {
         "color_scheme": "scheme-1",
-        "newsletter_enable": true,
+        "newsletter_enable": false,
         "newsletter_heading": "Subscribe to our emails",
-        "enable_follow_on_shop": true,
+        "enable_follow_on_shop": false,
         "show_social": true,
         "enable_country_selector": false,
         "enable_language_selector": false,
@@ -109,7 +49,6 @@
     }
   },
   "order": [
-    "custom_testimonials_RXXAyJ",
     "footer"
   ]
 }
