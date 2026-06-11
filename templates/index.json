@@ -18,6 +18,7 @@
         "heading": "Shop Our Collection",
         "subheading": "Handpicked favorites just for you",
         "heading_alignment": "left",
+        "collection": "frontpage",
         "products_to_show": 8,
         "show_vendor": false,
         "show_view_all": true,
