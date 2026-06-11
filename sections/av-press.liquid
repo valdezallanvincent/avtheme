@@ -1,0 +1,124 @@
+{%- comment -%}
+  AV PRESS / AS SEEN IN
+  Elegant strip of publication names in serif italic.
+  Creates instant social proof and elevates brand perception.
+{%- endcomment -%}
+
+{%- style -%}
+  #av-pr-{{ section.id }} {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background: {{ section.settings.bg_color }};
+    border-top: 1px solid rgba(13,13,13,0.07);
+    border-bottom: 1px solid rgba(13,13,13,0.07);
+  }
+  #av-pr-{{ section.id }} .av-pr__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  #av-pr-{{ section.id }} .av-pr__label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(13,13,13,0.35);
+    white-space: nowrap;
+    padding-right: 2rem;
+    border-right: 1px solid rgba(13,13,13,0.12);
+  }
+  #av-pr-{{ section.id }} .av-pr__logos {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex: 1;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  #av-pr-{{ section.id }} .av-pr__item {
+    font-family: var(--av-font-heading, Georgia, serif);
+    font-style: italic;
+    font-size: {{ section.settings.font_size }}rem;
+    font-weight: 400;
+    color: rgba(13,13,13,{{ section.settings.opacity | divided_by: 100.0 }});
+    padding: 0.8rem 2.4rem;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+    position: relative;
+    transition: color 0.2s ease;
+  }
+  #av-pr-{{ section.id }} .av-pr__item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 1.8rem;
+    background: rgba(13,13,13,0.12);
+  }
+  #av-pr-{{ section.id }} .av-pr__item:hover {
+    color: rgba(13,13,13,0.8);
+  }
+  @media (max-width: 749px) {
+    #av-pr-{{ section.id }} .av-pr__label { border-right: none; padding-right: 0; margin-bottom: 1rem; width: 100%; text-align: center; }
+    #av-pr-{{ section.id }} .av-pr__item { font-size: {{ section.settings.font_size | times: 0.85 }}rem; padding: 0.6rem 1.6rem; }
+  }
+{%- endstyle -%}
+
+<section id="av-pr-{{ section.id }}" class="av-press-section">
+  <div class="av-pr__inner av-reveal">
+    {%- if section.settings.label != blank -%}
+      <span class="av-pr__label">{{ section.settings.label | escape }}</span>
+    {%- endif -%}
+    <div class="av-pr__logos">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.name != blank -%}
+          <span class="av-pr__item" {{ block.shopify_attributes }}>{{ block.settings.name | escape }}</span>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "AV Press Bar",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 8,
+  "blocks": [
+    {
+      "type": "publication",
+      "name": "Publication",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Publication name", "default": "Vogue" }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "text", "id": "label", "label": "Label text", "default": "As seen in" },
+    { "type": "color", "id": "bg_color", "label": "Background color", "default": "#F9F7F4" },
+    { "type": "range", "id": "font_size", "label": "Font size (rem)", "min": 2, "max": 5, "step": 1, "default": 3 },
+    { "type": "range", "id": "opacity", "label": "Text opacity (%)", "min": 20, "max": 80, "step": 5, "default": 40 },
+    { "type": "range", "id": "padding_top",    "label": "Padding top",    "min": 16, "max": 80, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 16, "max": 80, "step": 4, "unit": "px", "default": 36 }
+  ],
+  "presets": [
+    {
+      "name": "AV Press Bar",
+      "blocks": [
+        { "type": "publication", "settings": { "name": "Vogue" } },
+        { "type": "publication", "settings": { "name": "Harper's Bazaar" } },
+        { "type": "publication", "settings": { "name": "Elle" } },
+        { "type": "publication", "settings": { "name": "GQ" } },
+        { "type": "publication", "settings": { "name": "Cosmopolitan" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,274 @@
+{%- comment -%}
+  AV FOOTER — full dark lifestyle footer
+  Brand column · Nav links · Newsletter · Social · Legal
+{%- endcomment -%}
+
+{%- style -%}
+  .av-footer {
+    background: #0d0d0d;
+    color: rgba(249,247,244,0.75);
+    padding: 8rem 0 0;
+    font-family: var(--av-font-body, sans-serif);
+  }
+  .av-footer__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+    gap: 5.6rem;
+  }
+
+  /* Brand column */
+  .av-footer__brand-name {
+    font-family: var(--av-font-heading, Georgia, serif);
+    font-size: 3.2rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #f9f7f4;
+    margin: 0 0 1.6rem;
+    line-height: 1;
+  }
+  .av-footer__tagline {
+    font-size: 1.4rem;
+    line-height: 1.7;
+    color: rgba(249,247,244,0.5);
+    margin: 0 0 3.2rem;
+    max-width: 28rem;
+  }
+  .av-footer__social {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+  .av-footer__social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    border: 1px solid rgba(249,247,244,0.15);
+    color: rgba(249,247,244,0.6);
+    text-decoration: none;
+    transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+  }
+  .av-footer__social-link:hover {
+    border-color: var(--av-accent, #c9a96e);
+    color: var(--av-accent, #c9a96e);
+    background: rgba(201,169,110,0.08);
+  }
+  .av-footer__social-link svg {
+    width: 1.6rem;
+    height: 1.6rem;
+    fill: currentColor;
+  }
+
+  /* Nav columns */
+  .av-footer__col-heading {
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #f9f7f4;
+    margin: 0 0 2.4rem;
+  }
+  .av-footer__links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .av-footer__links a {
+    font-size: 1.4rem;
+    color: rgba(249,247,244,0.5);
+    text-decoration: none;
+    transition: color 0.2s ease;
+    display: inline-block;
+  }
+  .av-footer__links a:hover { color: #f9f7f4; }
+
+  /* Newsletter column */
+  .av-footer__nl-text {
+    font-size: 1.4rem;
+    line-height: 1.7;
+    color: rgba(249,247,244,0.5);
+    margin: 0 0 2.4rem;
+  }
+  .av-footer__nl-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .av-footer__nl-input {
+    padding: 1.3rem 1.6rem;
+    font-size: 1.4rem;
+    font-family: var(--av-font-body, sans-serif);
+    background: rgba(249,247,244,0.06);
+    border: 1px solid rgba(249,247,244,0.15);
+    border-radius: 4px;
+    color: #f9f7f4;
+    outline: none;
+    transition: border-color 0.2s ease;
+    width: 100%;
+  }
+  .av-footer__nl-input::placeholder { color: rgba(249,247,244,0.3); }
+  .av-footer__nl-input:focus { border-color: var(--av-accent, #c9a96e); }
+  .av-footer__nl-btn {
+    padding: 1.3rem 2.4rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    font-family: var(--av-font-body, sans-serif);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--av-accent, #c9a96e);
+    color: #0d0d0d;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    width: 100%;
+  }
+  .av-footer__nl-btn:hover { opacity: 0.88; transform: translateY(-1px); }
+
+  /* Divider */
+  .av-footer__divider {
+    max-width: var(--page-width);
+    margin: 6.4rem auto 0;
+    padding: 0 2rem;
+    border-top: 1px solid rgba(249,247,244,0.08);
+  }
+  .av-footer__bottom {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 2.4rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+  }
+  .av-footer__copyright {
+    font-size: 1.25rem;
+    color: rgba(249,247,244,0.3);
+  }
+  .av-footer__legal {
+    display: flex;
+    gap: 2.4rem;
+    flex-wrap: wrap;
+  }
+  .av-footer__legal a {
+    font-size: 1.25rem;
+    color: rgba(249,247,244,0.3);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .av-footer__legal a:hover { color: rgba(249,247,244,0.7); }
+  .av-footer__accent-line {
+    display: block;
+    width: 3.2rem;
+    height: 2px;
+    background: var(--av-accent, #c9a96e);
+    margin-bottom: 2.8rem;
+  }
+
+  @media (max-width: 989px) {
+    .av-footer__inner { grid-template-columns: 1fr 1fr; gap: 4rem; }
+  }
+  @media (max-width: 580px) {
+    .av-footer__inner { grid-template-columns: 1fr; gap: 3.6rem; }
+    .av-footer__bottom { flex-direction: column; align-items: flex-start; }
+  }
+{%- endstyle -%}
+
+<footer class="av-footer" role="contentinfo">
+  <div class="av-footer__inner">
+
+    {%- comment -%} Brand column {%- endcomment -%}
+    <div class="av-footer__brand av-reveal">
+      <p class="av-footer__brand-name">{{ shop.name }}</p>
+      <span class="av-footer__accent-line"></span>
+      <p class="av-footer__tagline">Quality you can feel, at prices that make sense. Curated pieces for the life you want to live.</p>
+      <div class="av-footer__social">
+        {%- if settings.social_instagram_link != blank -%}
+          <a class="av-footer__social-link" href="{{ settings.social_instagram_link }}" aria-label="Instagram" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+        {%- else -%}
+          <a class="av-footer__social-link" href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+        {%- endif -%}
+        <a class="av-footer__social-link" href="{{ settings.social_tiktok_link | default: '#' }}" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.16 8.16 0 004.77 1.52V6.75a4.85 4.85 0 01-1-.06z"/></svg>
+        </a>
+        <a class="av-footer__social-link" href="{{ settings.social_facebook_link | default: '#' }}" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+      </div>
+    </div>
+
+    {%- comment -%} Shop links {%- endcomment -%}
+    <div class="av-footer__nav av-reveal" style="--av-delay: 80ms">
+      <h3 class="av-footer__col-heading">Shop</h3>
+      <ul class="av-footer__links">
+        <li><a href="{{ routes.all_products_collection_url }}">All Products</a></li>
+        <li><a href="{{ routes.collections_url }}">Collections</a></li>
+        <li><a href="/pages/about">Our Story</a></li>
+        <li><a href="/blogs/news">Journal</a></li>
+      </ul>
+    </div>
+
+    {%- comment -%} Help links {%- endcomment -%}
+    <div class="av-footer__help av-reveal" style="--av-delay: 160ms">
+      <h3 class="av-footer__col-heading">Help</h3>
+      <ul class="av-footer__links">
+        <li><a href="/pages/faq">FAQ</a></li>
+        <li><a href="/pages/shipping">Shipping & Returns</a></li>
+        <li><a href="/pages/size-guide">Size Guide</a></li>
+        <li><a href="/pages/contact">Contact Us</a></li>
+      </ul>
+    </div>
+
+    {%- comment -%} Newsletter {%- endcomment -%}
+    <div class="av-footer__newsletter av-reveal" style="--av-delay: 240ms">
+      <h3 class="av-footer__col-heading">Stay Connected</h3>
+      <p class="av-footer__nl-text">Get exclusive offers, style tips, and first access to new arrivals — straight to your inbox.</p>
+      {%- form 'customer', id: 'av-footer-nl' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="av-footer__nl-form">
+          <input
+            class="av-footer__nl-input"
+            type="email"
+            name="contact[email]"
+            placeholder="your@email.com"
+            autocomplete="email"
+            required
+          >
+          <button class="av-footer__nl-btn" type="submit">Subscribe</button>
+        </div>
+      {%- endform -%}
+    </div>
+
+  </div>
+
+  <div class="av-footer__divider"></div>
+  <div class="av-footer__bottom">
+    <p class="av-footer__copyright">© {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+    <nav class="av-footer__legal" aria-label="Legal">
+      <a href="{{ shop.privacy_policy.url | default: '#' }}">Privacy Policy</a>
+      <a href="{{ shop.terms_of_service.url | default: '#' }}">Terms of Service</a>
+      <a href="{{ shop.refund_policy.url | default: '#' }}">Refund Policy</a>
+    </nav>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "AV Footer",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

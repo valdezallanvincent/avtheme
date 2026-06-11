@@ -1,0 +1,277 @@
+{%- comment -%}
+  AV LOOKBOOK
+  Two tall editorial images side-by-side with overlay, category label,
+  and a slide-up CTA on hover. The hallmark of every lifestyle brand homepage.
+{%- endcomment -%}
+
+{%- style -%}
+  #av-lb-{{ section.id }} {
+    padding: {{ section.settings.padding_top }}px 0 {{ section.settings.padding_bottom }}px;
+    background: rgb(var(--color-background));
+  }
+  #av-lb-{{ section.id }} .av-lb__inner {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+  #av-lb-{{ section.id }} .av-lb__header {
+    text-align: center;
+    margin-bottom: 4.8rem;
+  }
+  #av-lb-{{ section.id }} .av-lb__eyebrow {
+    display: inline-block;
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--av-accent, #c9a96e);
+    margin-bottom: 0.8rem;
+  }
+  #av-lb-{{ section.id }} .av-lb__heading {
+    font-family: var(--av-font-heading, Georgia, serif) !important;
+    font-size: clamp(3rem, 4.5vw, 5.2rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: rgb(var(--color-foreground));
+    margin: 0;
+    line-height: 1;
+  }
+  #av-lb-{{ section.id }} .av-lb__heading em {
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* Grid */
+  #av-lb-{{ section.id }} .av-lb__grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.blocks.size | default: 2 }}, 1fr);
+    gap: 1.6rem;
+  }
+
+  /* Tile */
+  #av-lb-{{ section.id }} .av-lb__tile {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    text-decoration: none;
+    background: rgba(var(--color-foreground), 0.05);
+    border-radius: 4px;
+  }
+  #av-lb-{{ section.id }} .av-lb__tile-img-wrap {
+    position: relative;
+    padding-bottom: {{ section.settings.image_ratio }}%;
+    overflow: hidden;
+  }
+  #av-lb-{{ section.id }} .av-lb__tile-img-wrap img,
+  #av-lb-{{ section.id }} .av-lb__tile-img-wrap .placeholder-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.7s cubic-bezier(0.22,1,0.36,1);
+  }
+  #av-lb-{{ section.id }} .av-lb__tile:hover .av-lb__tile-img-wrap img {
+    transform: scale(1.06);
+  }
+
+  /* Gradient overlay — stronger than collection tiles, more editorial */
+  #av-lb-{{ section.id }} .av-lb__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0,0,0,0.72) 0%,
+      rgba(0,0,0,0.18) 45%,
+      rgba(0,0,0,0) 75%
+    );
+    transition: opacity 0.4s ease;
+    z-index: 1;
+  }
+  #av-lb-{{ section.id }} .av-lb__tile:hover .av-lb__overlay {
+    opacity: 1.15;
+  }
+
+  /* Content */
+  #av-lb-{{ section.id }} .av-lb__tile-content {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 3.2rem 3.6rem;
+    color: #fff;
+  }
+  #av-lb-{{ section.id }} .av-lb__tile-tag {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  #av-lb-{{ section.id }} .av-lb__tile-title {
+    font-family: var(--av-font-heading, Georgia, serif);
+    font-size: clamp(2.4rem, 3.5vw, 4.4rem);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    margin: 0 0 2.4rem;
+  }
+  #av-lb-{{ section.id }} .av-lb__tile-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #fff;
+    transform: translateY(12px);
+    opacity: 0;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+  }
+  #av-lb-{{ section.id }} .av-lb__tile:hover .av-lb__tile-cta {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  #av-lb-{{ section.id }} .av-lb__tile-cta::after {
+    content: '';
+    display: inline-block;
+    width: 3.2rem;
+    height: 1px;
+    background: #fff;
+    transition: width 0.3s ease;
+  }
+  #av-lb-{{ section.id }} .av-lb__tile:hover .av-lb__tile-cta::after {
+    width: 5rem;
+  }
+
+  @media (max-width: 749px) {
+    #av-lb-{{ section.id }} .av-lb__grid {
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+    }
+    #av-lb-{{ section.id }} .av-lb__tile-content {
+      padding: 2.4rem 2.4rem;
+    }
+    #av-lb-{{ section.id }} .av-lb__tile-cta {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+{%- endstyle -%}
+
+<section id="av-lb-{{ section.id }}" class="av-lookbook-section">
+  <div class="av-lb__inner">
+    {%- if section.settings.heading != blank or section.settings.eyebrow != blank -%}
+      <div class="av-lb__header av-reveal">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="av-lb__eyebrow">{{ section.settings.eyebrow | escape }}</p>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="av-lb__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="av-lb__grid">
+      {%- for block in section.blocks -%}
+        <a class="av-lb__tile av-reveal" style="--av-delay: {{ forloop.index0 | times: 150 }}ms" href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
+          <div class="av-lb__tile-img-wrap">
+            {%- if block.settings.image -%}
+              {{
+                block.settings.image
+                | image_url: width: 1400
+                | image_tag:
+                  loading: 'lazy',
+                  sizes: '50vw',
+                  widths: '600,800,1000,1200,1400',
+                  alt: block.settings.title | escape
+              }}
+            {%- elsif block.settings.image_url != blank -%}
+              <img src="{{ block.settings.image_url }}?auto=format&fit=crop&w=1200&q=85" alt="{{ block.settings.title | escape }}" width="1200" height="1680" loading="lazy">
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag }}
+            {%- endif -%}
+          </div>
+          <div class="av-lb__overlay"></div>
+          <div class="av-lb__tile-content">
+            {%- if block.settings.tag != blank -%}
+              <span class="av-lb__tile-tag">{{ block.settings.tag | escape }}</span>
+            {%- endif -%}
+            {%- if block.settings.title != blank -%}
+              <h3 class="av-lb__tile-title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+            {%- if block.settings.cta != blank -%}
+              <span class="av-lb__tile-cta">{{ block.settings.cta | escape }}</span>
+            {%- endif -%}
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "AV Lookbook",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "type": "panel",
+      "name": "Lookbook panel",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image (uploaded)" },
+        { "type": "text", "id": "image_url", "label": "Image URL (if no upload)", "info": "Paste an Unsplash URL." },
+        { "type": "text", "id": "tag", "label": "Tag (small uppercase label)", "default": "New Season" },
+        { "type": "text", "id": "title", "label": "Title", "default": "The Summer Edit" },
+        { "type": "text", "id": "cta", "label": "CTA text", "default": "Shop Now" },
+        { "type": "url",  "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Lookbook" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Style for every moment" },
+    {
+      "type": "range", "id": "image_ratio", "label": "Image height ratio (%)",
+      "min": 80, "max": 160, "step": 5, "default": 130
+    },
+    { "type": "range", "id": "padding_top",    "label": "Padding top",    "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 80 }
+  ],
+  "presets": [
+    {
+      "name": "AV Lookbook",
+      "blocks": [
+        {
+          "type": "panel",
+          "settings": {
+            "image_url": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1200&q=85",
+            "tag": "New Season",
+            "title": "The Summer Edit",
+            "cta": "Shop Women",
+            "link": "shopify://collections/all"
+          }
+        },
+        {
+          "type": "panel",
+          "settings": {
+            "image_url": "https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=1200&q=85",
+            "tag": "Essentials",
+            "title": "Modern Classics",
+            "cta": "Shop Men",
+            "link": "shopify://collections/all"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

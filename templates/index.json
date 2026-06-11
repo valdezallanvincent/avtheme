@@ -44,10 +44,7 @@
     },
     "av_features_bar": {
       "type": "av-features-bar",
-      "settings": {
-        "padding_top": 40,
-        "padding_bottom": 40
-      },
+      "settings": { "padding_top": 40, "padding_bottom": 40 },
       "blocks": {
         "feat_1": { "type": "feature", "settings": { "icon": "1", "label": "Free Shipping", "description": "On orders over ₱1,500" } },
         "feat_2": { "type": "feature", "settings": { "icon": "3", "label": "Secure Checkout", "description": "100% encrypted payments" } },
@@ -67,36 +64,9 @@
         "padding_bottom": 80
       },
       "blocks": {
-        "tile_1": {
-          "type": "tile",
-          "settings": {
-            "image_url": "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=1200&q=85",
-            "label": "New Season",
-            "title": "Women's Edit",
-            "cta": "Shop Now",
-            "link": "shopify://collections/all"
-          }
-        },
-        "tile_2": {
-          "type": "tile",
-          "settings": {
-            "image_url": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=800&q=85",
-            "label": "Essentials",
-            "title": "Men's Collection",
-            "cta": "Explore",
-            "link": "shopify://collections/all"
-          }
-        },
-        "tile_3": {
-          "type": "tile",
-          "settings": {
-            "image_url": "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=800&q=85",
-            "label": "Curated",
-            "title": "Accessories",
-            "cta": "Shop Now",
-            "link": "shopify://collections/all"
-          }
-        }
+        "tile_1": { "type": "tile", "settings": { "image_url": "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?auto=format&fit=crop&w=1200&q=85", "label": "New Season", "title": "Women's Edit", "cta": "Shop Now", "link": "shopify://collections/all" } },
+        "tile_2": { "type": "tile", "settings": { "image_url": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=800&q=85", "label": "Essentials", "title": "Men's Collection", "cta": "Explore", "link": "shopify://collections/all" } },
+        "tile_3": { "type": "tile", "settings": { "image_url": "https://images.unsplash.com/photo-1558769132-cb1aea458c5e?auto=format&fit=crop&w=800&q=85", "label": "Curated", "title": "Accessories", "cta": "Shop Now", "link": "shopify://collections/all" } }
       },
       "block_order": ["tile_1","tile_2","tile_3"]
     },
@@ -114,6 +84,40 @@
         "padding_top": 96,
         "padding_bottom": 96
       }
+    },
+    "av_press": {
+      "type": "av-press",
+      "settings": {
+        "label": "As seen in",
+        "bg_color": "#F9F7F4",
+        "font_size": 3,
+        "opacity": 40,
+        "padding_top": 36,
+        "padding_bottom": 36
+      },
+      "blocks": {
+        "p1": { "type": "publication", "settings": { "name": "Vogue" } },
+        "p2": { "type": "publication", "settings": { "name": "Harper's Bazaar" } },
+        "p3": { "type": "publication", "settings": { "name": "Elle" } },
+        "p4": { "type": "publication", "settings": { "name": "GQ" } },
+        "p5": { "type": "publication", "settings": { "name": "Cosmopolitan" } }
+      },
+      "block_order": ["p1","p2","p3","p4","p5"]
+    },
+    "av_lookbook": {
+      "type": "av-lookbook",
+      "settings": {
+        "eyebrow": "The Lookbook",
+        "heading": "Style for every moment",
+        "image_ratio": 130,
+        "padding_top": 80,
+        "padding_bottom": 80
+      },
+      "blocks": {
+        "lb1": { "type": "panel", "settings": { "image_url": "https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&w=1200&q=85", "tag": "New Season", "title": "The Summer Edit", "cta": "Shop Women", "link": "shopify://collections/all" } },
+        "lb2": { "type": "panel", "settings": { "image_url": "https://images.unsplash.com/photo-1516257984-b1b4d707412e?auto=format&fit=crop&w=1200&q=85", "tag": "Essentials", "title": "Modern Classics", "cta": "Shop Men", "link": "shopify://collections/all" } }
+      },
+      "block_order": ["lb1","lb2"]
     },
     "av_social_proof": {
       "type": "av-social-proof",
@@ -151,36 +155,9 @@
         "padding_bottom": 96
       },
       "blocks": {
-        "rev_1": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "quote": "I've been shopping here for months and the quality never disappoints. The fabrics are soft, the fit is perfect, and delivery was super fast!",
-            "name": "Maria Santos",
-            "meta": "Verified Buyer · Metro Manila",
-            "verified": true
-          }
-        },
-        "rev_2": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "quote": "Finally found a brand that gets it right. The packaging was beautiful and the product exceeded my expectations. 10/10 would recommend!",
-            "name": "Jake Reyes",
-            "meta": "Verified Buyer · Cebu City",
-            "verified": true
-          }
-        },
-        "rev_3": {
-          "type": "review",
-          "settings": {
-            "rating": 5,
-            "quote": "Great pieces, great price. I ordered two sizes and the return process was so easy. Definitely a repeat customer.",
-            "name": "Ana Cruz",
-            "meta": "Verified Buyer · Davao",
-            "verified": true
-          }
-        }
+        "rev_1": { "type": "review", "settings": { "rating": 5, "quote": "I've been shopping here for months and the quality never disappoints. The fabrics are soft, the fit is perfect, and delivery was super fast!", "name": "Maria Santos", "meta": "Verified Buyer · Metro Manila", "verified": true } },
+        "rev_2": { "type": "review", "settings": { "rating": 5, "quote": "Finally found a brand that gets it right. The packaging was beautiful and the product exceeded my expectations. 10/10 would recommend!", "name": "Jake Reyes", "meta": "Verified Buyer · Cebu City", "verified": true } },
+        "rev_3": { "type": "review", "settings": { "rating": 5, "quote": "Great pieces, great price. I ordered two sizes and the return process was so easy. Definitely a repeat customer.", "name": "Ana Cruz", "meta": "Verified Buyer · Davao", "verified": true } }
       },
       "block_order": ["rev_1","rev_2","rev_3"]
     },
@@ -189,7 +166,7 @@
       "settings": {
         "eyebrow": "Stay in the loop",
         "heading": "Get early access to new drops",
-        "subheading": "Subscribe to our newsletter and be the first to know about exclusive offers, new arrivals, and style tips.",
+        "subheading": "Subscribe and be the first to know about exclusive offers, new arrivals, and style tips.",
         "placeholder": "Enter your email",
         "button_label": "Subscribe",
         "fine_print": "No spam. Unsubscribe anytime.",
@@ -221,6 +198,8 @@
     "av_features_bar",
     "av_collection_tiles",
     "av_product_grid",
+    "av_press",
+    "av_lookbook",
     "av_social_proof",
     "av_brand_story",
     "av_testimonials",
