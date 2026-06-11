@@ -11,7 +11,7 @@
         "button_link": "shopify://collections/all",
         "secondary_button_label": "Our Story",
         "secondary_button_link": "shopify://pages/about",
-        "section_height": 760,
+        "section_height": 750,
         "overlay_opacity": 50,
         "content_alignment": "flex-start",
         "show_scroll_indicator": true
