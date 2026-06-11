@@ -297,6 +297,89 @@
 
       /* Subtle page background warmth */
       body { background-color: var(--av-off-white) !important; }
+
+      /* ── Header polish ── */
+      .header {
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        background-color: rgba(249,247,244,0.92) !important;
+        transition: box-shadow 0.3s ease;
+      }
+      .header.scrolled-past-header,
+      .header--sticky-always {
+        box-shadow: 0 1px 0 rgba(0,0,0,0.06), 0 4px 24px rgba(0,0,0,0.04);
+      }
+      .header__heading-link {
+        font-family: var(--av-font-heading) !important;
+        font-size: 2.6rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.04em;
+        color: var(--av-black) !important;
+        text-decoration: none !important;
+      }
+      .header__menu-item a,
+      .header__menu-item button,
+      .list-menu__item a {
+        font-family: var(--av-font-body) !important;
+        font-size: 1.35rem !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: rgba(13,13,13,0.75) !important;
+        transition: color 0.2s ease !important;
+      }
+      .header__menu-item a:hover,
+      .list-menu__item a:hover {
+        color: var(--av-black) !important;
+      }
+      .header__icon svg { stroke-width: 1.5px; }
+
+      /* ── Announcement bar ── */
+      .announcement-bar { letter-spacing: 0.06em; font-size: 1.25rem !important; }
+      .announcement-bar__message { font-family: var(--av-font-body) !important; }
+
+      /* ── Global button polish ── */
+      .button, .button--primary, .shopify-payment-button__button {
+        font-family: var(--av-font-body) !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+        font-size: 1.3rem !important;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease !important;
+      }
+      .button:hover, .button--primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.16) !important;
+      }
+      .button--secondary {
+        border: 1.5px solid rgba(13,13,13,0.25) !important;
+      }
+
+      /* ── Card / product tile polish ── */
+      .card-wrapper { transition: transform 0.3s ease; }
+      .card-wrapper:hover { transform: translateY(-4px); }
+      .card__media img { transition: transform 0.5s cubic-bezier(0.22,1,0.36,1) !important; }
+      .card-wrapper:hover .card__media img { transform: scale(1.04); }
+      .card__heading { font-family: var(--av-font-heading) !important; font-weight: 500 !important; }
+
+      /* ── Links & interactive elements ── */
+      a { transition: color 0.2s ease; }
+      :focus-visible { outline: 2px solid var(--av-accent) !important; outline-offset: 3px; }
+
+      /* ── Smooth scroll ── */
+      html { scroll-behavior: smooth; }
+
+      /* ── Section dividers — add subtle warm separator between sections ── */
+      .shopify-section + .shopify-section:not([id*="av_marquee"]):not([id*="av_hero"]) {
+        border-top: 1px solid rgba(13,13,13,0.05);
+      }
+
+      /* ── Price text ── */
+      .price__regular, .price-item { font-family: var(--av-font-body) !important; }
+
+      /* ── Cart drawer ── */
+      .cart-drawer { font-family: var(--av-font-body) !important; }
+      .cart-drawer__header { border-bottom: 1px solid rgba(13,13,13,0.08) !important; }
     </style>
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
