@@ -1,0 +1,128 @@
+{%- comment -%}
+  ============================================================
+  AV PRODUCT METAFIELDS
+  Displays custom product metafields in a clean table.
+  Only renders fields that have values — never shows blank rows.
+
+  Usage: {% render 'av-product-metafields', product: product %}
+
+  Skills: Shopify metafields, metaobject resolution,
+  conditional Liquid rendering, semantic HTML table.
+
+  To use: define metafields in Shopify Admin →
+  Settings → Custom data → Products, then reference them here.
+  Common namespace is "custom".
+  ============================================================
+{%- endcomment -%}
+
+{%- liquid
+  assign has_metafields = false
+
+  if product.metafields.custom.material != blank
+    assign has_metafields = true
+  endif
+  if product.metafields.custom.care_instructions != blank
+    assign has_metafields = true
+  endif
+  if product.metafields.custom.origin != blank
+    assign has_metafields = true
+  endif
+  if product.metafields.custom.dimensions != blank
+    assign has_metafields = true
+  endif
+  if product.metafields.custom.sku_code != blank
+    assign has_metafields = true
+  endif
+-%}
+
+{%- if has_metafields -%}
+  <div class="av-metafields">
+    <h3 class="av-metafields__heading">Product Details</h3>
+    <dl class="av-metafields__list">
+
+      {%- if product.metafields.custom.material != blank -%}
+        <div class="av-metafields__row">
+          <dt>Material</dt>
+          <dd>{{ product.metafields.custom.material.value }}</dd>
+        </div>
+      {%- endif -%}
+
+      {%- if product.metafields.custom.care_instructions != blank -%}
+        <div class="av-metafields__row">
+          <dt>Care Instructions</dt>
+          <dd>{{ product.metafields.custom.care_instructions.value }}</dd>
+        </div>
+      {%- endif -%}
+
+      {%- if product.metafields.custom.origin != blank -%}
+        <div class="av-metafields__row">
+          <dt>Country of Origin</dt>
+          <dd>{{ product.metafields.custom.origin.value }}</dd>
+        </div>
+      {%- endif -%}
+
+      {%- if product.metafields.custom.dimensions != blank -%}
+        <div class="av-metafields__row">
+          <dt>Dimensions</dt>
+          <dd>{{ product.metafields.custom.dimensions.value }}</dd>
+        </div>
+      {%- endif -%}
+
+      {%- if product.metafields.custom.sku_code != blank -%}
+        <div class="av-metafields__row">
+          <dt>SKU</dt>
+          <dd>{{ product.metafields.custom.sku_code.value }}</dd>
+        </div>
+      {%- endif -%}
+
+    </dl>
+  </div>
+
+  <style>
+    .av-metafields {
+      margin-top: 2.4rem;
+      padding-top: 2.4rem;
+      border-top: 1px solid rgba(var(--color-foreground), 0.1);
+    }
+
+    .av-metafields__heading {
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(var(--color-foreground), 0.6);
+      margin: 0 0 1.2rem;
+    }
+
+    .av-metafields__list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .av-metafields__row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1.6rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(var(--color-foreground), 0.06);
+    }
+
+    .av-metafields__row:last-child {
+      border-bottom: none;
+    }
+
+    .av-metafields__row dt {
+      font-size: 1.4rem;
+      color: rgba(var(--color-foreground), 0.6);
+      flex-shrink: 0;
+    }
+
+    .av-metafields__row dd {
+      font-size: 1.4rem;
+      color: rgb(var(--color-foreground));
+      text-align: right;
+      margin: 0;
+    }
+  </style>
+{%- endif -%}

@@ -1,0 +1,275 @@
+{%- comment -%}
+  ============================================================
+  AV STICKY ADD-TO-CART BAR
+  Rendered on product pages. Hidden by default. Slides in from
+  the bottom when the user scrolls past the main ATC button.
+
+  Uses IntersectionObserver to detect when the original
+  buy-buttons block leaves the viewport.
+
+  Skills: Intersection Observer API, AJAX Cart API,
+  Shopify product object, variant JS integration,
+  mobile-first sticky UI.
+  ============================================================
+{%- endcomment -%}
+
+<div
+  id="av-sticky-atc"
+  class="av-sticky-atc"
+  aria-hidden="true"
+  data-product-id="{{ product.id }}"
+>
+  <div class="av-sticky-atc__inner page-width">
+
+    {%- comment -%} Product info (title + variant) {%- endcomment -%}
+    <div class="av-sticky-atc__info">
+      <span class="av-sticky-atc__title">{{ product.title | escape }}</span>
+      <span class="av-sticky-atc__variant" id="av-sticky-variant">
+        {%- if product.selected_or_first_available_variant.title != 'Default Title' -%}
+          {{ product.selected_or_first_available_variant.title | escape }}
+        {%- endif -%}
+      </span>
+    </div>
+
+    {%- comment -%} Price {%- endcomment -%}
+    <div class="av-sticky-atc__price" id="av-sticky-price">
+      {{ product.selected_or_first_available_variant.price | money }}
+    </div>
+
+    {%- comment -%} ATC button — posts to cart via AJAX {%- endcomment -%}
+    <button
+      type="button"
+      class="av-sticky-atc__btn"
+      id="av-sticky-atc-btn"
+      data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+      {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}
+    >
+      {%- if product.selected_or_first_available_variant.available -%}
+        Add to Cart
+      {%- else -%}
+        Sold Out
+      {%- endif -%}
+    </button>
+
+  </div>
+</div>
+
+<style>
+  .av-sticky-atc {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    background-color: rgb(var(--color-background));
+    border-top: 1px solid rgba(var(--color-foreground), 0.1);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  /* Visible state toggled by JS */
+  .av-sticky-atc.is-visible {
+    transform: translateY(0);
+  }
+
+  .av-sticky-atc__inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.2rem 2rem;
+  }
+
+  .av-sticky-atc__info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .av-sticky-atc__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: rgb(var(--color-foreground));
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .av-sticky-atc__variant {
+    font-size: 1.3rem;
+    color: rgba(var(--color-foreground), 0.6);
+  }
+
+  .av-sticky-atc__price {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: rgb(var(--color-foreground));
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .av-sticky-atc__btn {
+    flex-shrink: 0;
+    padding: 1rem 2.4rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    border-radius: var(--buttons-radius, 0);
+    background-color: rgb(var(--color-button));
+    color: rgb(var(--color-button-text));
+    transition: opacity 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .av-sticky-atc__btn:hover:not(:disabled) {
+    opacity: 0.85;
+  }
+
+  .av-sticky-atc__btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .av-sticky-atc__btn.is-loading {
+    opacity: 0.7;
+    pointer-events: none;
+  }
+
+  /* Mobile: stack price under info, button full width */
+  @media screen and (max-width: 749px) {
+    .av-sticky-atc__inner {
+      flex-wrap: wrap;
+      gap: 1rem 1.6rem;
+      padding: 1rem 1.6rem;
+    }
+
+    .av-sticky-atc__info {
+      flex: 1;
+    }
+
+    .av-sticky-atc__price {
+      font-size: 1.5rem;
+    }
+
+    .av-sticky-atc__btn {
+      width: 100%;
+      padding: 1.2rem;
+      order: 3;
+    }
+  }
+</style>
+
+<script>
+(function () {
+  'use strict';
+
+  const bar     = document.getElementById('av-sticky-atc');
+  const btn     = document.getElementById('av-sticky-atc-btn');
+  const varSpan = document.getElementById('av-sticky-variant');
+  const priceEl = document.getElementById('av-sticky-price');
+
+  if (!bar || !btn) return;
+
+  // ── 1. Show/hide bar based on buy-buttons visibility ──────────────────────
+  // We observe the Dawn buy-buttons block (product-form section).
+  // When it scrolls out of view, the sticky bar slides in.
+  const buyButtons = document.querySelector('.product-form__buttons, [data-type="buy_buttons"]');
+  const target     = buyButtons || document.querySelector('.product__info-container');
+
+  if (target && 'IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const visible = !entry.isIntersecting;
+          bar.classList.toggle('is-visible', visible);
+          bar.setAttribute('aria-hidden', String(!visible));
+        });
+      },
+      { rootMargin: '0px', threshold: 0 }
+    );
+    observer.observe(target);
+  }
+
+  // ── 2. Sync variant when Dawn's variant picker fires ──────────────────────
+  // Dawn dispatches a custom 'variant:change' event on the document
+  // whenever a variant is selected (via product-form.js).
+  document.addEventListener('variant:change', (e) => {
+    const variant = e.detail && e.detail.variant;
+    if (!variant) return;
+
+    // Update variant label
+    varSpan.textContent = variant.title !== 'Default Title' ? variant.title : '';
+
+    // Update price
+    priceEl.textContent = variant.price
+      ? (variant.price / 100).toLocaleString('en-US', { style: 'currency', currency: window.Shopify.currency.active || 'USD' })
+      : '';
+
+    // Update button state
+    btn.dataset.variantId = variant.id;
+    btn.disabled          = !variant.available;
+    btn.textContent       = variant.available ? 'Add to Cart' : 'Sold Out';
+  });
+
+  // Also listen to change events on variant selects/radios inside the page form
+  document.querySelectorAll('.product-form .product-form__input input, .product-form .product-form__input select')
+    .forEach((el) => el.addEventListener('change', syncFromForm));
+
+  function syncFromForm() {
+    // Get current variant from the hidden variant_id input Dawn uses
+    const variantInput = document.querySelector('input[name="id"][form]') ||
+                         document.querySelector('.product-form input[name="id"]');
+    if (variantInput) {
+      btn.dataset.variantId = variantInput.value;
+    }
+  }
+
+  // ── 3. AJAX add-to-cart ───────────────────────────────────────────────────
+  btn.addEventListener('click', async () => {
+    const variantId = parseInt(btn.dataset.variantId, 10);
+    if (!variantId || btn.disabled) return;
+
+    btn.classList.add('is-loading');
+    btn.textContent = 'Adding…';
+
+    try {
+      const response = await fetch('/cart/add.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ id: variantId, quantity: 1 }),
+      });
+
+      if (!response.ok) throw new Error('Cart add failed');
+
+      // Trigger Dawn's cart update so the drawer/bubble refreshes
+      document.dispatchEvent(new CustomEvent('cart:refresh'));
+
+      // Also hit /cart.js to refresh Dawn's cart count bubble
+      fetch('/cart.js')
+        .then(r => r.json())
+        .then(cart => {
+          // Dawn listens to this custom event to update the cart count
+          document.dispatchEvent(new CustomEvent('cart:items-changed', { detail: { cart } }));
+
+          // Fallback: update the cart bubble element directly if present
+          const bubble = document.querySelector('.cart-count-bubble span[aria-hidden]');
+          if (bubble) bubble.textContent = cart.item_count;
+        });
+
+      btn.textContent = '✓ Added!';
+      setTimeout(() => { btn.textContent = 'Add to Cart'; }, 2000);
+
+    } catch (err) {
+      console.error('[av-sticky-atc] Cart error:', err);
+      btn.textContent = 'Error — try again';
+      setTimeout(() => { btn.textContent = 'Add to Cart'; }, 3000);
+    } finally {
+      btn.classList.remove('is-loading');
+    }
+  });
+})();
+</script>

@@ -485,6 +485,8 @@
                   section_id: section.id,
                   show_pickup_availability: true
                 -%}
+                {%- comment -%} AV: Product metafields (material, care, origin, etc.) {%- endcomment -%}
+                {%- render 'av-product-metafields', product: product -%}
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
                   <div class="rating-wrapper">
@@ -737,6 +739,9 @@
     </script>
   </div>
 </product-info>
+
+{%- comment -%} AV Sticky Add-to-Cart bar — slides up when main ATC scrolls out of view {%- endcomment -%}
+{%- render 'av-sticky-atc', product: product -%}
 
 {% schema %}
 {
