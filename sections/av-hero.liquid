@@ -264,7 +264,7 @@
 
     {%- if section.settings.heading != blank -%}
       <h1 class="av-hero__heading av-reveal" style="--av-delay: 80ms">
-        {{- section.settings.heading -}}
+        {{- section.settings.heading | newline_to_br -}}
       </h1>
     {%- endif -%}
 
@@ -344,10 +344,10 @@
       "default": "New Season"
     },
     {
-      "type": "textarea",
+      "type": "text",
       "id": "heading",
-      "label": "Heading (use <em> for italic)",
-      "default": "Dress the Life\n<em>You Want</em>"
+      "label": "Heading",
+      "default": "Dress the Life You Want"
     },
     {
       "type": "text",

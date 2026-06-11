@@ -5,7 +5,7 @@
       "settings": {
         "external_image_url": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=2400&q=85",
         "eyebrow": "New Season",
-        "heading": "Dress the Life\n<em>You Want</em>",
+        "heading": "Dress the Life You Want",
         "subheading": "Timeless essentials, thoughtfully made and curated just for you.",
         "button_label": "Shop the Collection",
         "button_link": "shopify://collections/all",
@@ -40,7 +40,7 @@
         "mq5": { "type": "item", "settings": { "text": "Easy 30-Day Returns" } },
         "mq6": { "type": "item", "settings": { "text": "Premium Quality" } }
       },
-      "blocks_order": ["mq1","mq2","mq3","mq4","mq5","mq6"]
+      "block_order": ["mq1","mq2","mq3","mq4","mq5","mq6"]
     },
     "av_features_bar": {
       "type": "av-features-bar",
@@ -54,7 +54,7 @@
         "feat_3": { "type": "feature", "settings": { "icon": "2", "label": "Easy Returns", "description": "30-day hassle-free returns" } },
         "feat_4": { "type": "feature", "settings": { "icon": "4", "label": "Premium Quality", "description": "Curated for lasting wear" } }
       },
-      "blocks_order": ["feat_1","feat_2","feat_3","feat_4"]
+      "block_order": ["feat_1","feat_2","feat_3","feat_4"]
     },
     "av_collection_tiles": {
       "type": "av-collection-tiles",
@@ -98,7 +98,7 @@
           }
         }
       },
-      "blocks_order": ["tile_1","tile_2","tile_3"]
+      "block_order": ["tile_1","tile_2","tile_3"]
     },
     "av_product_grid": {
       "type": "av-product-grid",
@@ -124,7 +124,7 @@
         "stat_3": { "type": "stat", "settings": { "number": "120", "suffix": "+", "decimals": 0, "label": "Products" } },
         "stat_4": { "type": "stat", "settings": { "number": "98", "suffix": "%", "decimals": 0, "label": "Satisfaction Rate" } }
       },
-      "blocks_order": ["stat_1","stat_2","stat_3","stat_4"]
+      "block_order": ["stat_1","stat_2","stat_3","stat_4"]
     },
     "av_brand_story": {
       "type": "av-brand-story",
@@ -182,7 +182,7 @@
           }
         }
       },
-      "blocks_order": ["rev_1","rev_2","rev_3"]
+      "block_order": ["rev_1","rev_2","rev_3"]
     },
     "av_newsletter": {
       "type": "av-newsletter",
