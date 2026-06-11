@@ -175,23 +175,43 @@
   if (!bar || !btn) return;
 
   // ── 1. Show/hide bar based on buy-buttons visibility ──────────────────────
-  // We observe the Dawn buy-buttons block (product-form section).
-  // When it scrolls out of view, the sticky bar slides in.
+  // We watch the Dawn buy-buttons block (product-form section).
+  // When it scrolls above the viewport, the sticky bar slides in.
   const buyButtons = document.querySelector('.product-form__buttons, [data-type="buy_buttons"]');
   const target     = buyButtons || document.querySelector('.product__info-container');
 
-  if (target && 'IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const visible = !entry.isIntersecting;
-          bar.classList.toggle('is-visible', visible);
-          bar.setAttribute('aria-hidden', String(!visible));
-        });
-      },
-      { rootMargin: '0px', threshold: 0 }
-    );
-    observer.observe(target);
+  function setVisible(visible) {
+    bar.classList.toggle('is-visible', visible);
+    bar.setAttribute('aria-hidden', String(!visible));
+  }
+
+  if (target) {
+    // Primary: IntersectionObserver (efficient, no scroll thrash).
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => entries.forEach((entry) => setVisible(!entry.isIntersecting)),
+        { rootMargin: '0px', threshold: 0 }
+      );
+      observer.observe(target);
+    }
+
+    // Fallback: a throttled scroll handler. IntersectionObserver
+    // callbacks can be deferred in some embedded/preview contexts, so
+    // this guarantees the bar toggles on every real scroll. Show the
+    // bar once the buy-buttons have scrolled fully above the viewport.
+    let ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        const rect = target.getBoundingClientRect();
+        setVisible(rect.bottom <= 0);
+        ticking = false;
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    onScroll();
   }
 
   // ── 2. Sync variant when Dawn's variant picker fires ──────────────────────
