@@ -1,0 +1,251 @@
+{%- comment -%}
+  ============================================================
+  AV A/B TEST (CRO EXPERIMENT)
+  Splits visitors 50/50 into Variant A or B, persists the
+  assignment in localStorage (sticky across visits), and pushes
+  the assignment + clicks to the GA4 dataLayer for measurement.
+
+  Demonstrates the JD skill: "A/B testing / CRO experiments".
+
+  How it works:
+  - Both variants are rendered server-side (hidden by default).
+  - On load, JS reads/creates a sticky bucket for this experiment
+    key and reveals the chosen variant.
+  - dataLayer events ('experiment_view', 'experiment_click') let
+    you measure which variant converts better in GA4/GTM.
+  ============================================================
+{%- endcomment -%}
+
+{%- assign exp = section.settings.experiment_key | default: 'hero_cta' -%}
+
+<section id="av-ab-{{ section.id }}" class="av-ab" data-experiment="{{ exp }}">
+  <div class="av-ab__inner page-width">
+
+    {%- comment -%} Variant A {%- endcomment -%}
+    <div class="av-ab__variant av-reveal" data-variant="A" hidden>
+      <h2 class="av-ab__heading">{{ section.settings.heading_a | escape }}</h2>
+      {%- if section.settings.text_a != blank -%}
+        <p class="av-ab__text">{{ section.settings.text_a | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label_a != blank -%}
+        <a class="av-ab__btn" href="{{ section.settings.button_link_a | default: '#' }}" data-variant-click="A">
+          {{ section.settings.button_label_a | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Variant B {%- endcomment -%}
+    <div class="av-ab__variant av-reveal" data-variant="B" hidden>
+      <h2 class="av-ab__heading">{{ section.settings.heading_b | escape }}</h2>
+      {%- if section.settings.text_b != blank -%}
+        <p class="av-ab__text">{{ section.settings.text_b | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.button_label_b != blank -%}
+        <a class="av-ab__btn av-ab__btn--accent" href="{{ section.settings.button_link_b | default: '#' }}" data-variant-click="B">
+          {{ section.settings.button_label_b | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  #av-ab-{{ section.id }} {
+    padding: {{ section.settings.padding_top }}px 2rem {{ section.settings.padding_bottom }}px;
+    background: linear-gradient(135deg, rgba(var(--color-foreground), 0.03), rgba(var(--color-foreground), 0.06));
+    text-align: center;
+  }
+  #av-ab-{{ section.id }} .av-ab__variant {
+    max-width: 64rem;
+    margin: 0 auto;
+  }
+  #av-ab-{{ section.id }} .av-ab__heading {
+    font-size: clamp(2.4rem, 4vw, 4rem);
+    font-weight: 700;
+    color: rgb(var(--color-foreground));
+    margin: 0 0 1.2rem;
+    letter-spacing: -0.01em;
+  }
+  #av-ab-{{ section.id }} .av-ab__text {
+    font-size: 1.7rem;
+    line-height: 1.6;
+    color: rgba(var(--color-foreground), 0.7);
+    margin: 0 0 2.8rem;
+  }
+  #av-ab-{{ section.id }} .av-ab__btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 1.4rem 3.4rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: var(--buttons-radius, 0);
+    background: rgb(var(--color-button));
+    color: rgb(var(--color-button-text));
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  #av-ab-{{ section.id }} .av-ab__btn--accent {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: #fff;
+  }
+  #av-ab-{{ section.id }} .av-ab__btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 34px rgba(0,0,0,0.18);
+  }
+</style>
+
+<script>
+(function () {
+  'use strict';
+
+  const root = document.getElementById('av-ab-{{ section.id }}');
+  if (!root) return;
+
+  const experiment = root.dataset.experiment;
+  const storageKey = 'av_exp_' + experiment;
+
+  // 1. Get or create a sticky 50/50 bucket for this visitor.
+  let variant;
+  try {
+    variant = localStorage.getItem(storageKey);
+    if (variant !== 'A' && variant !== 'B') {
+      variant = Math.random() < 0.5 ? 'A' : 'B';
+      localStorage.setItem(storageKey, variant);
+    }
+  } catch (e) {
+    // localStorage blocked — fall back to a per-pageview pick.
+    variant = Math.random() < 0.5 ? 'A' : 'B';
+  }
+
+  // 2. Reveal the chosen variant, hide the other.
+  root.querySelectorAll('.av-ab__variant').forEach((el) => {
+    const isChosen = el.dataset.variant === variant;
+    el.hidden = !isChosen;
+    if (isChosen) {
+      // ensure the reveal animation runs on the visible variant
+      requestAnimationFrame(() => el.classList.add('av-in'));
+    }
+  });
+
+  // 3. Push the assignment to the dataLayer (GA4 / GTM).
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'experiment_view',
+    experiment_id: experiment,
+    experiment_variant: variant,
+  });
+
+  // 4. Track clicks on the chosen variant's CTA.
+  const cta = root.querySelector('[data-variant-click="' + variant + '"]');
+  if (cta) {
+    cta.addEventListener('click', () => {
+      window.dataLayer.push({
+        event: 'experiment_click',
+        experiment_id: experiment,
+        experiment_variant: variant,
+      });
+    });
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "AV A/B Test",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Splits visitors 50/50 between Variant A and B (sticky per visitor) and reports views + clicks to the GA4 dataLayer so you can measure which converts better."
+    },
+    {
+      "type": "text",
+      "id": "experiment_key",
+      "label": "Experiment key",
+      "default": "hero_cta",
+      "info": "Unique id used for storage + analytics."
+    },
+    {
+      "type": "header",
+      "content": "Variant A (control)"
+    },
+    {
+      "type": "text",
+      "id": "heading_a",
+      "label": "Heading A",
+      "default": "Upgrade your everyday wardrobe"
+    },
+    {
+      "type": "text",
+      "id": "text_a",
+      "label": "Text A",
+      "default": "Timeless essentials, made to last."
+    },
+    {
+      "type": "text",
+      "id": "button_label_a",
+      "label": "Button label A",
+      "default": "Shop the collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link_a",
+      "label": "Button link A"
+    },
+    {
+      "type": "header",
+      "content": "Variant B (challenger)"
+    },
+    {
+      "type": "text",
+      "id": "heading_b",
+      "label": "Heading B",
+      "default": "Get 20% off your first order"
+    },
+    {
+      "type": "text",
+      "id": "text_b",
+      "label": "Text B",
+      "default": "Limited time — premium quality at a price you'll love."
+    },
+    {
+      "type": "text",
+      "id": "button_label_b",
+      "label": "Button label B",
+      "default": "Claim your discount"
+    },
+    {
+      "type": "url",
+      "id": "button_link_b",
+      "label": "Button link B"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    }
+  ],
+  "presets": [
+    {
+      "name": "AV A/B Test"
+    }
+  ]
+}
+{% endschema %}

@@ -181,7 +181,7 @@
   <div class="av-pg__inner">
 
     {%- if section.settings.heading != blank or section.settings.subheading != blank -%}
-      <div class="av-pg__header">
+      <div class="av-pg__header av-reveal">
         {%- if section.settings.heading != blank -%}
           <h2 class="av-pg__heading">{{ section.settings.heading | escape }}</h2>
         {%- endif -%}
@@ -191,10 +191,16 @@
       </div>
     {%- endif -%}
 
+    {%- comment -%}
+      Curated apparel images shown when a product has no photo yet,
+      so the grid looks populated. Cycles by loop index.
+    {%- endcomment -%}
+    {%- assign fallback_images = 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab,https://images.unsplash.com/photo-1596755094514-f87e34085b2c,https://images.unsplash.com/photo-1620799140408-edc6dcb6d633,https://images.unsplash.com/photo-1618354691373-d851c5c3a990,https://images.unsplash.com/photo-1576566588028-4147f3842f27,https://images.unsplash.com/photo-1593030761757-71fae45fa0e7,https://images.unsplash.com/photo-1622445275576-721325763afe,https://images.unsplash.com/photo-1556905055-8f358a7a47b2' | split: ',' -%}
+
     {%- if grid_collection != blank and grid_collection.products_count > 0 -%}
       <div class="av-pg__grid">
         {%- for product in grid_collection.products limit: products_to_show -%}
-          <a class="av-pg__card" href="{{ product.url }}">
+          <a class="av-pg__card av-reveal av-reveal--zoom" href="{{ product.url }}" style="--av-delay: {{ forloop.index0 | times: 80 }}ms">
 
             <div class="av-pg__card-image-wrap">
               {%- if product.featured_image -%}
@@ -210,9 +216,15 @@
                     alt: product.featured_image.alt | default: product.title | escape
                 }}
               {%- else -%}
-                <div class="av-pg__card-image-placeholder">
-                  {{ 'product-1' | placeholder_svg_tag }}
-                </div>
+                {%- assign fb_index = forloop.index0 | modulo: fallback_images.size -%}
+                {%- assign fb_url = fallback_images[fb_index] | append: '?auto=format&fit=crop&w=600&h=600&q=80' -%}
+                <img
+                  src="{{ fb_url }}"
+                  alt="{{ product.title | escape }}"
+                  width="600"
+                  height="600"
+                  loading="lazy"
+                >
               {%- endif -%}
             </div>
 

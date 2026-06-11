@@ -3,12 +3,14 @@
     "av_hero": {
       "type": "av-hero",
       "settings": {
+        "external_image_url": "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=2000&q=80",
+        "eyebrow": "New Season",
         "heading": "Discover Your Style",
-        "subheading": "Shop the latest collection — curated just for you.",
+        "subheading": "Timeless essentials, thoughtfully made and curated just for you.",
         "button_label": "Shop Now",
         "button_link": "shopify://collections/all",
-        "section_height": 600,
-        "overlay_opacity": 40,
+        "section_height": 660,
+        "overlay_opacity": 45,
         "content_alignment": "center"
       }
     },
@@ -17,25 +19,42 @@
       "settings": {
         "heading": "Shop Our Collection",
         "subheading": "Handpicked favorites just for you",
-        "heading_alignment": "left",
+        "heading_alignment": "center",
         "collection": "frontpage",
         "products_to_show": 8,
         "show_vendor": false,
         "show_view_all": true,
-        "padding_top": 60,
-        "padding_bottom": 60
+        "padding_top": 72,
+        "padding_bottom": 72
       }
     },
     "av_brand_story": {
       "type": "av-brand-story",
       "settings": {
         "layout": "image_left",
+        "external_image_url": "https://images.unsplash.com/photo-1556905055-8f358a7a47b2",
         "image_ratio": "4 / 3",
-        "image_radius": 0,
+        "image_radius": 12,
         "label": "Our Story",
         "heading": "Crafted with care, built to last.",
         "body": "<p>We believe great products come from great intentions. Every item in our store is thoughtfully sourced, rigorously tested, and made to bring real value to your everyday life.</p>",
         "button_label": "Learn More",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    },
+    "av_ab_test": {
+      "type": "av-ab-test",
+      "settings": {
+        "experiment_key": "home_promo",
+        "heading_a": "Upgrade your everyday wardrobe",
+        "text_a": "Timeless essentials, made to last.",
+        "button_label_a": "Shop the collection",
+        "button_link_a": "shopify://collections/all",
+        "heading_b": "Get 20% off your first order",
+        "text_b": "Limited time — premium quality at a price you'll love.",
+        "button_label_b": "Claim your discount",
+        "button_link_b": "shopify://collections/all",
         "padding_top": 80,
         "padding_bottom": 80
       }
@@ -44,6 +63,7 @@
   "order": [
     "av_hero",
     "av_product_grid",
-    "av_brand_story"
+    "av_brand_story",
+    "av_ab_test"
   ]
 }

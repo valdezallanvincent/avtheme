@@ -108,11 +108,12 @@
   }
 {%- endstyle -%}
 
+{%- assign bs_has_url = section.settings.external_image_url | strip -%}
 <section id="av-bs-{{ section.id }}" class="av-brand-story-section">
   <div class="av-bs__inner">
 
     {%- comment -%} Image column {%- endcomment -%}
-    <div class="av-bs__image-col">
+    <div class="av-bs__image-col av-reveal av-reveal--zoom">
       <div class="av-bs__image-wrap">
         {%- if section.settings.image -%}
           {{
@@ -126,6 +127,14 @@
               widths: '400, 600, 800, 1000',
               alt: section.settings.image.alt | default: section.settings.heading | escape
           }}
+        {%- elsif bs_has_url != blank -%}
+          <img
+            src="{{ section.settings.external_image_url }}?auto=format&fit=crop&w=1000&q=80"
+            alt="{{ section.settings.heading | escape }}"
+            width="1000"
+            height="750"
+            loading="lazy"
+          >
         {%- else -%}
           {{ 'lifestyle-1' | placeholder_svg_tag }}
         {%- endif -%}
@@ -135,19 +144,19 @@
     {%- comment -%} Text column {%- endcomment -%}
     <div class="av-bs__text-col">
       {%- if section.settings.label != blank -%}
-        <span class="av-bs__label">{{ section.settings.label | escape }}</span>
+        <span class="av-bs__label av-reveal">{{ section.settings.label | escape }}</span>
       {%- endif -%}
 
       {%- if section.settings.heading != blank -%}
-        <h2 class="av-bs__heading">{{ section.settings.heading }}</h2>
+        <h2 class="av-bs__heading av-reveal" style="--av-delay: 80ms">{{ section.settings.heading }}</h2>
       {%- endif -%}
 
       {%- if section.settings.body != blank -%}
-        <div class="av-bs__body">{{ section.settings.body }}</div>
+        <div class="av-bs__body av-reveal" style="--av-delay: 160ms">{{ section.settings.body }}</div>
       {%- endif -%}
 
       {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
-        <a class="av-bs__cta" href="{{ section.settings.button_link }}">
+        <a class="av-bs__cta av-reveal" style="--av-delay: 240ms" href="{{ section.settings.button_link }}">
           {{- section.settings.button_label | escape -}}
         </a>
       {%- endif -%}
@@ -175,7 +184,13 @@
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Image"
+      "label": "Image (uploaded)"
+    },
+    {
+      "type": "text",
+      "id": "external_image_url",
+      "label": "Image URL",
+      "info": "Used if no image is uploaded above."
     },
     {
       "type": "select",
