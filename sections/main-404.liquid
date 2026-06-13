@@ -1,23 +1,114 @@
-<style type="text/css">
-  .template-404 .title + * {
-    margin-top: 1rem;
+{%- style -%}
+  .av-404 {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 10rem 2rem 12rem;
+    text-align: center;
   }
-
-  @media screen and (min-width: 750px) {
-    .template-404 .title + * {
-      margin-top: 2rem;
-    }
+  .av-404__code {
+    font-family: var(--av-font-heading, Georgia, serif);
+    font-size: clamp(7rem, 16vw, 13rem);
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: rgb(var(--color-foreground));
+    opacity: 0.12;
+    margin: 0;
   }
-</style>
+  .av-404__eyebrow {
+    display: inline-block;
+    margin-top: -1.5rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--av-accent, #c9a96e);
+  }
+  .av-404__title {
+    font-family: var(--av-font-heading, Georgia, serif);
+    font-size: clamp(2.6rem, 5vw, 3.8rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 1.2rem 0 1rem;
+  }
+  .av-404__text {
+    font-size: 1.5rem;
+    line-height: 1.7;
+    opacity: 0.7;
+    max-width: 44rem;
+    margin: 0 auto 3.2rem;
+  }
+  .av-404__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 3.6rem;
+  }
+  .av-404__chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 1.1rem 2.2rem;
+    border: 1px solid rgba(var(--color-foreground), 0.18);
+    border-radius: 999px;
+    font-size: 1.35rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    color: rgb(var(--color-foreground));
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+  .av-404__chip:hover {
+    background: rgb(var(--color-foreground));
+    color: rgb(var(--color-background));
+    border-color: rgb(var(--color-foreground));
+    transform: translateY(-1px);
+  }
+  .av-404__search {
+    max-width: 40rem;
+    margin: 0 auto;
+    display: flex;
+    border: 1px solid rgba(var(--color-foreground), 0.2);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .av-404__search input {
+    flex: 1;
+    border: 0;
+    background: transparent;
+    padding: 1.3rem 1.8rem;
+    font-size: 1.4rem;
+    color: rgb(var(--color-foreground));
+    outline: none;
+  }
+  .av-404__search button {
+    border: 0;
+    background: rgb(var(--color-foreground));
+    color: rgb(var(--color-background));
+    padding: 0 2.4rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+{%- endstyle -%}
 
-<div class="template-404 page-width page-margin center">
-  <p>
-    {{ 'templates.404.subtext' | t }}
-  </p>
-  <h1 class="title">
-    {{ 'templates.404.title' | t }}
-  </h1>
-  <a href="{{ routes.all_products_collection_url }}" class="button">
-    {{ 'general.continue_shopping' | t }}
-  </a>
+<div class="av-404">
+  <p class="av-404__code">404</p>
+  <span class="av-404__eyebrow">Lost in the wardrobe</span>
+  <h1 class="av-404__title">This page slipped off the rack</h1>
+  <p class="av-404__text">The page you're looking for can't be found — but the good stuff is just a tap away. Pick up where you left off below.</p>
+
+  <div class="av-404__links">
+    <a class="av-404__chip" href="{{ routes.all_products_collection_url }}">Shop All</a>
+    <a class="av-404__chip" href="/collections/men">Men</a>
+    <a class="av-404__chip" href="/collections/women">Women</a>
+    <a class="av-404__chip" href="/collections/accessories">Accessories</a>
+  </div>
+
+  <form action="{{ routes.search_url }}" method="get" role="search" class="av-404__search">
+    <input type="search" name="q" placeholder="Search the store…" aria-label="Search">
+    <button type="submit">Search</button>
+  </form>
 </div>
