@@ -20,9 +20,9 @@
     align-items: center;
     justify-content: {{ align }};
     overflow: hidden;
-    {%- if has_picker == blank and has_url == blank -%}
+    /* Always keep a dark editorial base so the hero never flashes the page
+       background while the image loads (or if it fails) — white text stays legible. */
     background: linear-gradient(160deg, #1a1208 0%, #2d1f0e 45%, #0d1a2e 100%);
-    {%- endif -%}
   }
 
   #av-hero-{{ section.id }} .av-hero__bg {
