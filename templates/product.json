@@ -47,7 +47,7 @@
           "settings": {
             "heading": "Materials",
             "icon": "leather",
-            "content": "",
+            "content": "<p>Made from premium, responsibly sourced fabrics chosen for comfort, breathability, and lasting wear. Every piece is quality-checked before it ships.</p>",
             "page": ""
           }
         },
@@ -56,16 +56,16 @@
           "settings": {
             "heading": "Shipping & Returns",
             "icon": "truck",
-            "content": "",
+            "content": "<p>Free standard shipping on orders over ₱1,500. Orders are processed within 2–3 business days. Enjoy easy 30-day returns on unworn items with tags attached.</p>",
             "page": ""
           }
         },
         "collapsible-row-2": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Dimensions",
+            "heading": "Size & Fit",
             "icon": "ruler",
-            "content": "",
+            "content": "<p>This piece runs true to size with a relaxed, modern fit. Between sizes? We recommend sizing up. See our full Size Guide for detailed measurements.</p>",
             "page": ""
           }
         },
@@ -74,7 +74,7 @@
           "settings": {
             "heading": "Care Instructions",
             "icon": "heart",
-            "content": "",
+            "content": "<p>To keep this piece looking its best: machine wash cold on a gentle cycle, lay flat or hang to dry, and iron on low if needed. Avoid bleach.</p>",
             "page": ""
           }
         },
@@ -112,41 +112,6 @@
         "padding_bottom": 12
       }
     },
-    "image-with-text": {
-      "type": "image-with-text",
-      "blocks": {
-        "image-with-text-0": {
-          "type": "heading",
-          "settings": {
-            "heading": "Image with text",
-            "heading_size": "h1"
-          }
-        },
-        "image-with-text-1": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
-            "text_style": "body"
-          }
-        }
-      },
-      "block_order": [
-        "image-with-text-0",
-        "image-with-text-1"
-      ],
-      "settings": {
-        "height": "small",
-        "desktop_image_width": "medium",
-        "layout": "text_first",
-        "desktop_content_position": "top",
-        "desktop_content_alignment": "left",
-        "content_layout": "no-overlap",
-        "color_scheme": "scheme-2",
-        "mobile_content_alignment": "left",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "multicolumn": {
       "type": "multicolumn",
       "blocks": {
@@ -154,7 +119,7 @@
           "type": "column",
           "settings": {
             "title": "Free Shipping",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "text": "<p>Complimentary shipping on every order over ₱1,500, delivered nationwide.</p>",
             "link_label": "",
             "link": ""
           }
@@ -162,8 +127,17 @@
         "column-1": {
           "type": "column",
           "settings": {
-            "title": "Hassle-Free Exchanges",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.<\/p>",
+            "title": "Easy 30-Day Returns",
+            "text": "<p>Changed your mind? Return unworn items within 30 days, no fuss.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column-2": {
+          "type": "column",
+          "settings": {
+            "title": "Secure Checkout",
+            "text": "<p>Shop with confidence — every payment is encrypted and protected.</p>",
             "link_label": "",
             "link": ""
           }
@@ -171,15 +145,16 @@
       },
       "block_order": [
         "column-0",
-        "column-1"
+        "column-1",
+        "column-2"
       ],
       "settings": {
-        "title": "",
-        "heading_size": "h1",
+        "title": "Why shop with Damit",
+        "heading_size": "h2",
         "image_width": "full",
         "image_ratio": "adapt",
-        "columns_desktop": 2,
-        "column_alignment": "left",
+        "columns_desktop": 3,
+        "column_alignment": "center",
         "background_style": "none",
         "button_label": "",
         "button_link": "",
@@ -209,7 +184,6 @@
   },
   "order": [
     "main",
-    "image-with-text",
     "multicolumn",
     "related-products"
   ]
