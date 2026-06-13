@@ -8,7 +8,7 @@
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "✦ Free Shipping on orders over ₱1,500 &nbsp;·&nbsp; New Season Arrivals Now Live ✦",
+            "text": "✦  Free Shipping on orders over ₱1,500  ·  New Season Arrivals Now Live  ✦",
             "text_alignment": "center",
             "color_scheme": "scheme-4",
             "link": "shopify://collections/all"
