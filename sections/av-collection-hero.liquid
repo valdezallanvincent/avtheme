@@ -4,10 +4,31 @@
   breadcrumb nav, collection title, description and subcollection tiles.
 {%- endcomment -%}
 
+{%- comment -%} Contextual fallback hero per collection handle (used only when the collection has no image) {%- endcomment -%}
+{%- assign h = collection.handle -%}
+{%- assign ctx_image = section.settings.fallback_image_url -%}
+{%- if h contains 'jacket' -%}
+  {%- assign ctx_image = 'https://images.unsplash.com/photo-1551028719-00167b16eac5' -%}
+{%- elsif h contains 'shirt' -%}
+  {%- assign ctx_image = 'https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf' -%}
+{%- elsif h contains 'pant' or h contains 'bottom' -%}
+  {%- assign ctx_image = 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a' -%}
+{%- elsif h contains 'dress' -%}
+  {%- assign ctx_image = 'https://images.unsplash.com/photo-1595777457583-95e059d581b8' -%}
+{%- elsif h contains 'top' -%}
+  {%- assign ctx_image = 'https://images.unsplash.com/photo-1576566588028-4147f3842f27' -%}
+{%- elsif h contains 'accessor' -%}
+  {%- assign ctx_image = 'https://images.unsplash.com/photo-1523275335684-37898b6baf30' -%}
+{%- elsif h == 'men' -%}
+  {%- assign ctx_image = 'https://images.unsplash.com/photo-1488161628813-04466f872be2' -%}
+{%- elsif h == 'women' -%}
+  {%- assign ctx_image = 'https://images.unsplash.com/photo-1483985988355-763728e1935b' -%}
+{%- endif -%}
+
 {%- assign has_image = false -%}
 {%- if collection.image -%}
   {%- assign has_image = true -%}
-{%- elsif section.settings.fallback_image_url != blank -%}
+{%- elsif ctx_image != blank -%}
   {%- assign has_image = true -%}
 {%- endif -%}
 
@@ -114,7 +135,7 @@
       {%- if collection.image -%}
         {{ collection.image | image_url: width: 2000 | image_tag: loading: 'eager', fetchpriority: 'high', alt: collection.title | escape }}
       {%- else -%}
-        <img src="{{ section.settings.fallback_image_url }}?auto=format&fit=crop&w=2000&q=80" alt="{{ collection.title | escape }}" loading="eager" fetchpriority="high">
+        <img src="{{ ctx_image }}?auto=format&fit=crop&w=2000&q=80" alt="{{ collection.title | escape }}" loading="eager" fetchpriority="high">
       {%- endif -%}
     </div>
     <div class="av-ch__overlay"></div>
