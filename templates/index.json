@@ -73,11 +73,11 @@
     "av_product_grid": {
       "type": "av-product-grid",
       "settings": {
-        "eyebrow": "Curated for you",
-        "heading": "Shop the Edit",
-        "subheading": "Handpicked favorites, just for you",
+        "eyebrow": "Just in",
+        "heading": "New Arrivals",
+        "subheading": "The latest to land — fresh styles, ready to wear",
         "heading_alignment": "center",
-        "collection": "women",
+        "collection": "new-arrivals",
         "products_to_show": 8,
         "show_vendor": false,
         "show_view_all": true,
